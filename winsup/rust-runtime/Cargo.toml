@@ -1,0 +1,14 @@
+[package]
+name = "win2nix-runtime"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+description = "Rust-first Win32/Unix runtime layer for win2nix experiments"
+
+[lib]
+crate-type = ["rlib", "cdylib", "staticlib"]
+
+[features]
+default = []
+ffi = []
+
