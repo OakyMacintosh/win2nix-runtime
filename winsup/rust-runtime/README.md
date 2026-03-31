@@ -1,8 +1,8 @@
 # win2nix Rust runtime (Win32 + Unix)
 
-This directory is an in-progress Rust migration layer for the MSYS2/Cygwin runtime codebase.
+This directory introduces an incremental Rust runtime layer meant to replace C runtime utility code over time while preserving C ABI compatibility.
 
-## Implemented now
+## What is included
 
 - WoA-focused architecture detection with `IsWow64Process2` on Windows.
 - High-resolution time implementations:
@@ -11,13 +11,16 @@ This directory is an in-progress Rust migration layer for the MSYS2/Cygwin runti
 - Cross-platform process ID retrieval.
 - Cross-platform readonly file open helper.
 - Optional C ABI exports via the `ffi` cargo feature.
-- Initial Rust port of MSYS2 path classification and path conversion helpers in `src/msys2.rs`.
-- Initial Rust port of `textreadmode.c` entrypoint in `src/textreadmode.rs` (Windows-only module).
 
-## Conversion status
+## Why this is useful for Windows on ARM
 
-A full conversion of the historical `winsup/cygwin` C/C++ codebase is very large and is not complete in this change.
-This crate provides the foundation plus concrete Rust ports for key MSYS2 runtime behaviors so additional runtime files can be moved incrementally while preserving ABI compatibility.
+On Snapdragon/Windows on ARM machines, runtime behavior can depend on host CPU architecture and emulation state. The `detect_capabilities` API records:
+
+- host architecture (`x86`, `x86_64`, `arm64`)
+- process architecture (native/emulated)
+- expected x64/x86 emulation availability
+
+This allows upstream runtime code to make architecture-aware decisions without relying on ad-hoc C preprocessor logic.
 
 ## Build
 
