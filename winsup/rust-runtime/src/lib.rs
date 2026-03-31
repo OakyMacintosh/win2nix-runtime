@@ -3,6 +3,10 @@
 use std::fmt;
 use std::path::Path;
 
+pub mod msys2;
+#[cfg(windows)]
+pub mod textreadmode;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum RuntimeArch {
     X86,
